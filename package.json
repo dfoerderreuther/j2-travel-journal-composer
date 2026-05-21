@@ -1,0 +1,14 @@
+{
+  "name": "j2-travel-journal-composer",
+  "version": "1.0.0",
+  "description": "BYOM composer for J2 Travel Journal EDS sample",
+  "scripts": {
+    "test": "jest",
+    "deploy": "aio app deploy"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@adobe/aio-lib-core-config": "^5.0.0"
+  }
+}

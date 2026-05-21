@@ -1,0 +1,18 @@
+application:
+  actions: actions
+  runtimeManifest:
+    packages:
+      j2-composer:
+        license: Apache-2.0
+        actions:
+          compose-hotel-page:
+            function: actions/compose-hotel-page/index.js
+            web: 'yes'
+            runtime: nodejs:20
+            annotations:
+              require-adobe-auth: false
+            inputs:
+              DA_API_BASE: $DA_API_BASE
+              DA_ORG: $DA_ORG
+              DA_SITE: $DA_SITE
+              EDS_PREVIEW_TOKEN: $EDS_PREVIEW_TOKEN
