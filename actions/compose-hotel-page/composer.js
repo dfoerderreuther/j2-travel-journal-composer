@@ -43,20 +43,6 @@ function composeHtml({ destination, journalHtml, hotelIds, hotelPages, org, site
     .journal-content h1 { font-size: 2.5rem; margin: 0 0 1.25rem; line-height: 1.2; }
     .journal-content p { font-size: 1.1rem; line-height: 1.75; color: #444; max-width: 72ch; margin: 0 0 1rem; }
 
-    /* hotel grid */
-    h2.hotels-heading { font-size: 1.75rem; margin: 0 0 1.5rem; }
-    .hotel-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
-    .hotel-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); display: flex; flex-direction: column; transition: box-shadow .2s; }
-    .hotel-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.13); }
-    .hotel-card > img { width: 100%; height: 220px; object-fit: cover; display: block; }
-    .hotel-card-body { padding: 1.25rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
-    .hotel-card-body h2 { font-size: 1.2rem; margin: 0 0 .25rem; }
-    .hotel-location { font-size: .875rem; color: #777; margin: 0 0 .75rem; }
-    .hotel-description { font-size: .9rem; line-height: 1.6; color: #555; margin: 0 0 1rem; flex: 1; }
-    .hotel-meta { display: flex; align-items: center; gap: 1rem; margin-top: auto; }
-    .hotel-rating { color: #e8a020; font-size: 1rem; letter-spacing: .05em; }
-    .hotel-price { font-size: .95rem; font-weight: 600; color: #1a1a1a; margin-left: auto; }
-
     /* footer */
     footer { background: #1a1a1a; color: #999; text-align: center; padding: 1.5rem; font-size: .875rem; margin-top: 4rem; }
   </style>
@@ -67,11 +53,11 @@ function composeHtml({ destination, journalHtml, hotelIds, hotelPages, org, site
     <div class="journal-content">
       ${fixedJournalHtml}
     </div>
-    <div class="hotels-heading-section">
-      <h2>Recommended Hotels</h2>
-    </div>
-    <div class="hotel-list">
-      ${hotelCardsHtml || '<p>No hotels available for this destination.</p>'}
+    <div class="hotels-section">
+      <h2 class="hotels-heading">Recommended Hotels</h2>
+      <div class="hotel-list">
+        ${hotelCardsHtml || '<p>No hotels available for this destination.</p>'}
+      </div>
     </div>
   </main>
   <footer><p>© 2026 Travel Journal</p></footer>
