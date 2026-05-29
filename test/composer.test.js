@@ -7,13 +7,10 @@ const H101_HTML = `<div>
   <img src="https://picsum.photos/seed/h101-hotel/800/500" alt="Blue Bay Palace beachfront">
   <p>Beachfront resort on the sheltered bay of Elounda with private beach access.</p>
   <p>The sea here is extraordinary — calm, clear, and warm from June through October.</p>
-  <table>
-    <thead><tr><th>Metadata</th><th></th></tr></thead>
-    <tbody>
-      <tr><td>Rating</td><td>5</td></tr>
-      <tr><td>Price Range</td><td>from £299/night</td></tr>
-    </tbody>
-  </table>
+  <div class="hotel-details">
+    <div><div>Rating</div><div>5</div></div>
+    <div><div>Price Range</div><div>from £299/night</div></div>
+  </div>
 </div>`;
 
 const H201_HTML = `<div>
@@ -21,13 +18,10 @@ const H201_HTML = `<div>
   <p><em>Monastiraki, Athens, Greece</em></p>
   <img src="https://picsum.photos/seed/h201-hotel/800/500" alt="Rooftop terrace with Acropolis view">
   <p>Wake up to the Parthenon. Rooftop terrace, best seat in Athens.</p>
-  <table>
-    <thead><tr><th>Metadata</th><th></th></tr></thead>
-    <tbody>
-      <tr><td>Rating</td><td>4</td></tr>
-      <tr><td>Price Range</td><td>from £189/night</td></tr>
-    </tbody>
-  </table>
+  <div class="hotel-details">
+    <div><div>Rating</div><div>4</div></div>
+    <div><div>Price Range</div><div>from £189/night</div></div>
+  </div>
 </div>`;
 
 const JOURNAL_HTML = `<div>

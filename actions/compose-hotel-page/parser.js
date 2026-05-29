@@ -7,7 +7,7 @@
  *   <p><em>Location, Country</em></p>
  *   <img src="..." alt="...">
  *   <p>Description...</p>
- *   <table> Metadata rows with Rating and Price Range </table>
+ *   <div class="hotel-details"> EDS block with Rating and Price Range rows </div>
  */
 
 function tag(name, html) {
@@ -40,19 +40,17 @@ function stripTags(html) {
   return decodeEntities(html.replace(/<[^>]+>/g, '').trim());
 }
 
-function parseMetadataTable(html) {
+function parseMetadataBlock(html) {
   const meta = {};
-  const tableMatch = html.match(/<table[\s\S]*?<\/table>/i);
-  if (!tableMatch) return meta;
-  const rows = tableMatch[0].match(/<tr[\s\S]*?<\/tr>/gi) || [];
-  rows.forEach((row) => {
-    const cells = row.match(/<td[^>]*>([\s\S]*?)<\/td>/gi) || [];
-    if (cells.length >= 2) {
-      const key = stripTags(cells[0]).toLowerCase().replace(/\s+/g, '');
-      const val = stripTags(cells[1]);
-      meta[key] = val;
-    }
-  });
+  const blockStart = html.indexOf('<div class="hotel-details">');
+  if (blockStart === -1) return meta;
+  const section = html.slice(blockStart);
+  const rowRegex = /<div>\s*<div>([^<]+)<\/div>\s*<div>([^<]+)<\/div>\s*<\/div>/g;
+  let match;
+  while ((match = rowRegex.exec(section)) !== null) {
+    const key = match[1].trim().toLowerCase().replace(/\s+/g, '');
+    meta[key] = match[2].trim();
+  }
   return meta;
 }
 
@@ -75,7 +73,7 @@ function parseHotelPage(html, hotelId, baseUrl = '') {
     if (text && text !== location) paragraphs.push(text);
   }
 
-  const meta = parseMetadataTable(html);
+  const meta = parseMetadataBlock(html);
 
   return {
     id: hotelId,

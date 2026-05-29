@@ -6,18 +6,22 @@
  *   2. /{destination}-hotels.json — ordered hotel ID list
  *   3. /hotels/{id}.plain.html    — per-hotel authored pages
  *
- * Composes final HTML and writes to DA at /composed/{destination}.
+ * Composes final HTML. If HLX_ADMIN_TOKEN or DA_WRITE_TOKEN are present,
+ * writes to DA at /composed/{destination} and triggers EDS preview.
  *
  * Params:
- *   destination  — e.g. "greece" or "crete" (required)
- *   DA_ORG, DA_SITE, DA_API_BASE, EDS_PREVIEW_TOKEN
+ *   destination   — e.g. "greece" or "crete" (required)
+ *   DA_ORG, DA_SITE, DA_API_BASE
+ *   HLX_ADMIN_TOKEN — admin.hlx.page auth (x-auth-token)
+ *   DA_WRITE_TOKEN  — admin.da.live IMS Bearer token for source writes
  */
 
 const { fetchJournalPage, fetchHotelIds, fetchAllHotelPages } = require('./sources');
 const { composeHtml } = require('./composer');
+const { triggerPreview } = require('./preview');
 
 async function main(params) {
-  const { destination, DA_API_BASE, DA_ORG, DA_SITE, EDS_PREVIEW_TOKEN } = params;
+  const { destination, DA_API_BASE, DA_ORG, DA_SITE, HLX_ADMIN_TOKEN, DA_WRITE_TOKEN } = params;
 
   if (!destination) {
     return { statusCode: 400, body: { error: 'destination param required (e.g. "greece")' } };
@@ -42,6 +46,28 @@ async function main(params) {
       statusCode: 422,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ error: 'Missing hotel pages', missingIds: validation.missingIds }),
+    };
+  }
+
+  if (HLX_ADMIN_TOKEN || DA_WRITE_TOKEN) {
+    const previewUrl = await triggerPreview({
+      apiBase: DA_API_BASE || 'https://admin.da.live',
+      org: DA_ORG,
+      site: DA_SITE,
+      hlxAdminToken: HLX_ADMIN_TOKEN,
+      daWriteToken: DA_WRITE_TOKEN,
+      destination,
+      html,
+    });
+
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        destination,
+        previewUrl,
+        hotelsResolved: hotelIds.length,
+      }),
     };
   }
 

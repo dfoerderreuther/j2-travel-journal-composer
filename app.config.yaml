@@ -15,4 +15,5 @@ application:
               DA_API_BASE: $DA_API_BASE
               DA_ORG: $DA_ORG
               DA_SITE: $DA_SITE
-              EDS_PREVIEW_TOKEN: $EDS_PREVIEW_TOKEN
+              HLX_ADMIN_TOKEN: $HLX_ADMIN_TOKEN
+              DA_WRITE_TOKEN: $DA_WRITE_TOKEN
