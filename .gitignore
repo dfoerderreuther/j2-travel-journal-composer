@@ -1,3 +1,4 @@
 .env
 .aio
 node_modules
+dist
